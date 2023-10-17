@@ -51,5 +51,5 @@ class TestIntegerChoicesArrayField:
         assert formfield.empty_value is None
 
     def test_formfield_validate(self) -> None:
-        field = IntegerChoicesArrayField(choices=CustomUser.UserType.choices)
+        field = IntegerChoicesArrayField(choices=CustomUser.UserStatus.choices)
         field.validate([1], None)
