@@ -21,7 +21,12 @@ class ChoicesArrayField(models.JSONField):
     ) -> None:
         self.choices = choices
         self.widget = kwargs.pop("widget", self.default_widget)
-        defaults = {"blank": True, "default": list, "choices": self.choices}
+        defaults = {
+            "blank": True,
+            "null": True,
+            "default": list,
+            "choices": self.choices,
+        }
         defaults.update(kwargs)
         super().__init__(**defaults)
 
