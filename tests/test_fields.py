@@ -1,5 +1,6 @@
 import pytest
 from django import forms
+from django.core.exceptions import ValidationError
 
 from choices_fields.fields import IntegerChoicesArrayField, TextChoicesArrayField
 from demo.models import CustomUser
@@ -53,3 +54,12 @@ class TestIntegerChoicesArrayField:
     def test_formfield_validate(self) -> None:
         field = IntegerChoicesArrayField(choices=CustomUser.UserStatus.choices)
         field.validate([1], None)
+        field.validate([1,2], None)
+        field.validate([1,2,3], None)
+
+    def test_formfield_validate__error(self) -> None:
+        field = IntegerChoicesArrayField(choices=CustomUser.UserStatus.choices)
+        with pytest.raises(ValidationError) as exc_info:
+            field.validate([1,2,3,4], None)
+        assert exc_info.value.code == "invalid_choice"
+        assert exc_info.value.params["value"] == 4

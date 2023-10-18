@@ -61,7 +61,7 @@ class ChoicesArrayField(models.JSONField):
                 raise ValidationError(
                     self.error_messages["invalid_choice"],
                     code="invalid_choice",
-                    params={"value": value},
+                    params={"value": item},
                 )
 
 
